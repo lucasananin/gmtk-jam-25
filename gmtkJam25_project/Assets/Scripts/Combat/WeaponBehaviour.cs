@@ -98,7 +98,9 @@ public abstract class WeaponBehaviour : MonoBehaviour
     protected Quaternion CalculateProjectileRotation(int _projectileIndex)
     {
         var _rotationOffset = _weaponSO.GetProjectileRotation(_projectileIndex);
-        return transform.rotation * _rotationOffset;
+        var _myRotation = _entitySource.transform.localScale.x == 1 ? transform.rotation : transform.rotation * Quaternion.Euler(0, 0, 180);
+        return _myRotation * _rotationOffset;
+        //return transform.rotation * _rotationOffset;
     }
 
     protected Vector3 CalculateProjectilePosition(ProjectileSO _projectileSO)
@@ -182,12 +184,13 @@ public abstract class WeaponBehaviour : MonoBehaviour
 
     private void DecreaseAmmo(ProjectileSO _projectileSO)
     {
-        _ammoHandler?.DecreaseAmmo(_projectileSO, _weaponSO);
+        if (_ammoHandler)
+            _ammoHandler.DecreaseAmmo(_projectileSO, _weaponSO);
     }
 
     public bool HasAmmo()
     {
-        return _ammoHandler is null ? true : _ammoHandler.HasAmmo(_weaponSO.ProjectileSO, _weaponSO);
+        return _ammoHandler == null || _ammoHandler.HasAmmo(_weaponSO.ProjectileSO, _weaponSO);
     }
 
     //public bool HasChargeAmmo()
@@ -197,7 +200,7 @@ public abstract class WeaponBehaviour : MonoBehaviour
 
     public string GetAmmoString()
     {
-        return _ammoHandler is null ? $"-" : $"{_ammoHandler.GetAmmoQuantity(_weaponSO.ProjectileSO)}";
+        return _ammoHandler == null ? $"-" : $"{_ammoHandler.GetAmmoQuantity(_weaponSO.ProjectileSO)}";
     }
 
     public int GetDamage(/*bool _isChargedShot*/)

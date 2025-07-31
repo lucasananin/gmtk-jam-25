@@ -5,17 +5,18 @@ using UnityEngine;
 public class PlayerWeaponHandler : MonoBehaviour
 {
     [SerializeField] EntityBehaviour _entitySource = null;
-    [SerializeField] SideFlipper _entityFlipper = null;
+    //[SerializeField] SideFlipper _entityFlipper = null;
     [SerializeField] AmmoHandler _ammoHandler = null;
     //[SerializeField] EntityHolster _holster = null;
+    [SerializeField] InputHandler _input = null;
     [SerializeField, Range(1, 9)] int _maxWeaponsCount = 2;
     [SerializeField, Range(0f, 1f)] float _swapInputDelay = 0.3f;
     [SerializeField] List<WeaponBehaviour> _weaponsList = null;
 
-    [Header("// Debug")]
+    [Header("// READONLY")]
     [SerializeField] WeaponBehaviour _currentWeapon = null;
     [SerializeField] WeaponBehaviour _lastWeapon = null;
-    [SerializeField] WeaponRotator _weaponRotator = null;
+    //[SerializeField] WeaponRotator _weaponRotator = null;
     [SerializeField] int _currentWeaponIndex = 0;
     [SerializeField] int _lastWeaponIndex = 0;
     [SerializeField] bool _isWaitingSwapDelay = false;
@@ -41,6 +42,19 @@ public class PlayerWeaponHandler : MonoBehaviour
     //    _entityFlipper.OnFlip -= RotateCurrentWeapon;
     //}
 
+    private void Update()
+    {
+        if (_input.PullTrigger)
+        {
+            PullTrigger();
+        }
+         
+        if (_input.ReleaseTrigger)
+        {
+            ReleaseTrigger();
+        }
+    }
+
     private void FixedUpdate()
     {
         if (_canRotateWeapon)
@@ -51,12 +65,14 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     public void PullTrigger()
     {
-        _currentWeapon?.PullTrigger();
+        if (_currentWeapon)
+            _currentWeapon.PullTrigger();
     }
 
     public void ReleaseTrigger()
     {
-        _currentWeapon?.ReleaseTrigger();
+        if (_currentWeapon)
+            _currentWeapon.ReleaseTrigger();
     }
 
     public void SwapThroughInput(float _y)
@@ -119,15 +135,15 @@ public class PlayerWeaponHandler : MonoBehaviour
             _weaponsList[i].gameObject.SetActive(_isCurrentWeapon);
         }
 
-        _weaponRotator = _currentWeapon.GetComponent<WeaponRotator>();
+        //_weaponRotator = _currentWeapon.GetComponent<WeaponRotator>();
         RotateCurrentWeapon();
         UpdateHolster();
     }
 
     private void UpdateHolster()
     {
-        bool _canUpdate = _lastWeapon is not null && HasMoreThanOneWeapon();
-        var _so = _canUpdate ? _lastWeapon.WeaponSO : null;
+        //bool _canUpdate = _lastWeapon is not null && HasMoreThanOneWeapon();
+        //var _so = _canUpdate ? _lastWeapon.WeaponSO : null;
         //_holster.Init(_so);
     }
 

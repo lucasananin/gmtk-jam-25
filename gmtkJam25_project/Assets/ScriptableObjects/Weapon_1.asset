@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51340a0e3b7d6c4448bd33bfa6a8dd66, type: 3}
+  m_Name: Weapon_1
+  m_EditorClassIdentifier: 
+  _iconSprite: {fileID: 0}
+  _weaponPrefab: {fileID: 0}
+  _id: 1a
+  _displayName: 1a
+  _holsterPosition: {x: 0, y: 0, z: 0}
+  _holsterEuler: {x: 0, y: 0, z: 0}
+  _projectileSO: {fileID: 11400000, guid: 3ee1a6006bfd60b49b070c34b88c4399, type: 2}
+  _stats:
+    _damage: 1
+    _explosiveDamage: 1
+    _fireRate: 0.1
+    _chargeTime: 0
+    _maxHeat: 0
+    _heatPerShot: 0
+    _heatDecreasePerSecond: 0
+    _maxOverheatTime: 0
+    _shootAngle: 0
+    _arcMode: 0
+    _projectilesPerShot: 1
+    _ammoPerShot: 1
+    _isAutoChargeType: 0
+    _burstRate: 0
+    _shotsPerBurst: 0
+  _projectileStats:
+    _destroyTimeRange: {x: 6, y: 8}
+    _canDamageProjectiles: 0
+    _explosionRadius: 0
+    _canDamageSource: 0
+    _maxPierceCount: 1
+    _blockPierceTags: {fileID: 0}
+    _canAutoAim: 0
+    _autoAimDistance: 0
+    _autoAimAngle: 0
+    _moveSpeedRange: {x: 30, y: 30}
+    _scaleMultiplier: 1
+    _destroyOnStop: 0
+    _useAccelerationCurve: 0
+    _invertAcceleration: 0
+    _accelerationCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    _acelerationMultiplier: 0
+    _canBounce: 0
+    _bounceTags: {fileID: 0}
+    _maxCastDistance: 0
+    _maxGuidedRadius: 0

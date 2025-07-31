@@ -15,7 +15,7 @@ public abstract class ProjectileBehaviour : MonoBehaviour
 
     private Collider2D[] _explosionResults = new Collider2D[9];
     private RaycastHit2D[] _obstacleResults = new RaycastHit2D[9];
-    private List<EntityBehaviour> _entitiesFound = new List<EntityBehaviour>();
+    private List<EntityBehaviour> _entitiesFound = new();
 
     public event System.Action<ShootModel> OnInit = null;
     public event System.Action<RaycastHit2D> OnRaycastHit = null;
