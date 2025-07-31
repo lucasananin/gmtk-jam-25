@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf0b74b7fb719d49824ac0fd3e58beb, type: 3}
+  m_Name: Entity_Player
+  m_EditorClassIdentifier: 
+  _opponentTags: {fileID: 11400000, guid: 960c2e520a63ae74f9d7ed980f011222, type: 2}
+  _projectileHitTag: {fileID: 11400000, guid: 960c2e520a63ae74f9d7ed980f011222, type: 2}
