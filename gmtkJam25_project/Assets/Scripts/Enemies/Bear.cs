@@ -10,8 +10,11 @@ public class Bear : MonoBehaviour
     public float dashSpeed = 10f;
     public float dashDuration = 0.5f;
     public float dashDecisionRadius = 6f;
-    public float attackRange = 1.5f;
-    public float growlDistance = 10f;
+
+    [Header("Attacks")]
+    public GameObject Rocks;
+    public Sprite[] _rockSprites;
+    
 
     [Header("Stamina Settings")]
     public float totalStamina = 100f;
@@ -19,26 +22,29 @@ public class Bear : MonoBehaviour
     public float chaseStaminaCostPerSecond = 5f;
     public float dashStaminaCost = 25f;
     public float knockDirtStaminaCost = 10f;
-    public float attackStaminaCost = 15f;
     public float staminaThreshold = 20f;
     public Vector2 restDurationRange = new Vector2(2f, 4f);
 
-    [Header("Attack Cooldown")]
-    public float attackCooldown = 2f;
+    [Header("Behavior Settings")]
+    public float growlDistance = 10f;
+    [Range(0f, 1f)] public float growlChance = 0.2f;
+    public float actionPauseTime = 1.2f;
+    public float runAwayTriggerDistance = 4f;
+    public float runAwaySpeed = 5f;
 
-    public float currentStamina;
-    private float attackTimer = 0f;
-
-    private enum ActionState { Chasing, Dashing, Approaching, KnockingDirt, Attacking, Resting }
-    private ActionState currentState = ActionState.Chasing;
-
+    private float currentStamina;
     private Vector3 dashDirection;
     private float dashTimer = 0f;
-    private bool hasMadeDecision = false;
-    private bool hasGrowled = false;
-
+    private float pauseTimer = 0f;
     private float restTimer = 0f;
     private float targetRestDuration = 0f;
+
+    private bool hasMadeDecision = false;
+    private bool hasGrowled = false;
+    private int dashCount = 0;
+
+    private enum ActionState { Chasing, Dashing, DashPrep, KnockingDirt, DirtPrep, Resting, GrowlPrep, Growling, RunningAway }
+    private ActionState currentState = ActionState.Chasing;
 
     void Start()
     {
@@ -51,14 +57,34 @@ public class Bear : MonoBehaviour
         if (player == null) return;
 
         float distance = Vector3.Distance(transform.position, player.position);
-
-        HandleGrowl(distance);
         RegenerateStamina();
-        attackTimer += Time.deltaTime;
 
-        if (currentStamina < staminaThreshold && currentState != ActionState.Resting)
+        // Emergency run away if low stamina and too close
+        if (currentStamina < staminaThreshold && distance <= runAwayTriggerDistance && currentState != ActionState.RunningAway)
+        {
+            currentState = ActionState.RunningAway;
+            restTimer = 0f;
+            targetRestDuration = Random.Range(restDurationRange.x, restDurationRange.y);
+            Debug.Log("Bear runs away to recover!");
+            return;
+        }
+
+        // Resting after stamina drop (no threat near)
+        if (currentStamina < staminaThreshold && currentState != ActionState.Resting && currentState != ActionState.RunningAway)
         {
             EnterRestingState();
+            return;
+        }
+
+        if (currentState == ActionState.Chasing && distance >= growlDistance && !hasGrowled)
+        {
+            if (Random.value < growlChance)
+            {
+                currentState = ActionState.GrowlPrep;
+                pauseTimer = 0f;
+                return;
+            }
+            hasGrowled = true;
         }
 
         switch (currentState)
@@ -66,20 +92,32 @@ public class Bear : MonoBehaviour
             case ActionState.Chasing:
                 HandleChasing(distance);
                 break;
+            case ActionState.GrowlPrep:
+                HandlePauseThen(() => currentState = ActionState.Growling);
+                break;
+            case ActionState.Growling:
+                Debug.Log("Bear growls!");
+                currentState = ActionState.Chasing;
+                break;
+            case ActionState.DashPrep:
+                HandlePauseThen(StartDash);
+                break;
             case ActionState.Dashing:
                 HandleDashing();
                 break;
-            case ActionState.Approaching:
-                HandleApproaching();
+            case ActionState.DirtPrep:
+                HandlePauseThen(KickDirt);
                 break;
             case ActionState.KnockingDirt:
-                HandleKnockingDirt();
-                break;
-            case ActionState.Attacking:
-                HandleAttacking(distance);
+                Debug.Log("Bear kicks up dirt!");
+                currentState = ActionState.Chasing;
+                hasMadeDecision = false;
                 break;
             case ActionState.Resting:
                 HandleResting();
+                break;
+            case ActionState.RunningAway:
+                HandleRunningAway(distance);
                 break;
         }
     }
@@ -92,36 +130,49 @@ public class Bear : MonoBehaviour
             currentStamina -= chaseStaminaCostPerSecond * Time.deltaTime;
         }
 
-        if (distance <= attackRange && attackTimer >= attackCooldown)
+        if (distance <= dashDecisionRadius && !hasMadeDecision)
         {
-            currentState = ActionState.Attacking;
-        }
-        else if (distance <= dashDecisionRadius && !hasMadeDecision)
-        {
-            int choice = Random.Range(0, 100);
             hasMadeDecision = true;
+            int choice = Random.Range(0, 100);
 
             if (choice < 30 && currentStamina >= dashStaminaCost)
             {
-                StartDash();
+                currentState = ActionState.DashPrep;
+                pauseTimer = 0f;
             }
             else if (choice < 60 && currentStamina >= knockDirtStaminaCost)
             {
-                currentStamina -= knockDirtStaminaCost;
-                currentState = ActionState.KnockingDirt;
+                currentState = ActionState.DirtPrep;
+                pauseTimer = 0f;
             }
             else
             {
-                currentState = ActionState.Approaching;
+                hasMadeDecision = false;
             }
+        }
+    }
+
+    void HandlePauseThen(System.Action onComplete)
+    {
+        pauseTimer += Time.deltaTime;
+        if (pauseTimer >= actionPauseTime)
+        {
+            onComplete?.Invoke();
         }
     }
 
     void StartDash()
     {
-        dashDirection = (player.position - transform.position).normalized;
+        Vector3 baseDir = (player.position - transform.position).normalized;
+        Vector3 randomOffset = new Vector3(Random.Range(-0.2f, 0.2f), 0, Random.Range(-0.2f, 0.2f));
+        dashDirection = (baseDir + randomOffset).normalized;
+
         dashTimer = 0f;
-        currentStamina -= dashStaminaCost;
+        dashCount++;
+
+        if (dashCount == 1)
+            currentStamina -= dashStaminaCost;
+
         currentState = ActionState.Dashing;
     }
 
@@ -135,44 +186,60 @@ public class Bear : MonoBehaviour
         }
         else
         {
+            DecideNextDash();
+        }
+    }
+
+    void DecideNextDash()
+    {
+        if (dashCount == 1 && Random.value < 0.7f)
+        {
+            StartDash(); // second dash (free)
+        }
+        else if (dashCount == 2 && Random.value < 0.4f)
+        {
+            StartDash(); // third dash (free)
+        }
+        else
+        {
+            if (dashCount == 3)
+                currentStamina = 0f;
+
+            dashCount = 0;
             currentState = ActionState.Chasing;
             hasMadeDecision = false;
         }
     }
 
-    void HandleApproaching()
+    void KickDirt()
     {
-        if (currentStamina >= chaseStaminaCostPerSecond * Time.deltaTime)
+        currentStamina -= knockDirtStaminaCost;
+        currentState = ActionState.KnockingDirt;
+
+        int rockCount = Random.Range(2, 6);
+        Vector3 baseDir = (player.position - transform.position).normalized;
+
+        for (int i = 0; i < rockCount; i++)
         {
-            MoveTowards(player.position, chaseSpeed);
-            currentStamina -= chaseStaminaCostPerSecond * Time.deltaTime;
+            Vector3 spread = Quaternion.Euler(0, Random.Range(-90f, 90f), 0) * baseDir;
+            GameObject rock = Instantiate(Rocks, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+
+            RockProjectile rockProj = rock.GetComponent<RockProjectile>();
+            if (rockProj != null)
+            {
+                rockProj.Launch(spread, _rockSprites[Random.Range(0, _rockSprites.Length)]);
+            }
         }
 
-        if (Vector3.Distance(transform.position, player.position) <= attackRange && attackTimer >= attackCooldown)
-        {
-            currentState = ActionState.Attacking;
-        }
+        Invoke(nameof(ReturnToChaseAfterKick), 0.5f); 
     }
 
-    void HandleKnockingDirt()
+    void ReturnToChaseAfterKick()
     {
-        Debug.Log("Bear kicks up dirt!");
         currentState = ActionState.Chasing;
         hasMadeDecision = false;
     }
 
-    void HandleAttacking(float distance)
-    {
-        if (currentStamina >= attackStaminaCost)
-        {
-            Debug.Log("Bear attacks!");
-            currentStamina -= attackStaminaCost;
-            attackTimer = 0f;
-        }
-
-        currentState = ActionState.Chasing;
-        hasMadeDecision = false;
-    }
 
     void EnterRestingState()
     {
@@ -185,7 +252,19 @@ public class Bear : MonoBehaviour
     void HandleResting()
     {
         restTimer += Time.deltaTime;
+        if (restTimer >= targetRestDuration)
+        {
+            currentState = ActionState.Chasing;
+            hasMadeDecision = false;
+        }
+    }
 
+    void HandleRunningAway(float distance)
+    {
+        Vector3 directionAway = (transform.position - player.position).normalized;
+        transform.position += directionAway * runAwaySpeed * Time.deltaTime;
+
+        restTimer += Time.deltaTime;
         if (restTimer >= targetRestDuration)
         {
             currentState = ActionState.Chasing;
@@ -197,19 +276,6 @@ public class Bear : MonoBehaviour
     {
         currentStamina += staminaRecoveryPerSecond * Time.deltaTime;
         currentStamina = Mathf.Clamp(currentStamina, 0f, totalStamina);
-    }
-
-    void HandleGrowl(float distance)
-    {
-        if (distance > growlDistance)
-        {
-            hasGrowled = false;
-        }
-        else if (!hasGrowled)
-        {
-            Debug.Log("Bear growls!");
-            hasGrowled = true;
-        }
     }
 
     void MoveTowards(Vector3 target, float speed)

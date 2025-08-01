@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveInput: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  _shootInput: {fileID: 0}
 --- !u!114 &279194973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1688,21 +1689,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  chaseSpeed: 5
-  dashSpeed: 10
-  dashDuration: 0.5
+  chaseSpeed: 3
+  dashSpeed: 15
+  dashDuration: 0.7
   dashDecisionRadius: 6
-  attackRange: 0.5
-  growlDistance: 10
-  totalStamina: 100
+  Rocks: {fileID: 5648163984441048127, guid: 11abf029ddf42e042aa5f3d7e71ce740, type: 3}
+  _rockSprites:
+  - {fileID: 6185658079596479743, guid: af81721bee17aea4fa2679ee357e34ef, type: 3}
+  - {fileID: -6520399005743022887, guid: acf116e948b74a9428c70d1205be5894, type: 3}
+  - {fileID: 1964704918124762506, guid: 0511c092e2cb3c94c940fc0212d3dfa1, type: 3}
+  - {fileID: -6108902851531533812, guid: 0d03aaa04075fc541a5d8c1dd86cc540, type: 3}
+  totalStamina: 1000
   staminaRecoveryPerSecond: 7
   chaseStaminaCostPerSecond: 5
   dashStaminaCost: 15
   knockDirtStaminaCost: 12
-  attackStaminaCost: 8
   staminaThreshold: 20
-  restDurationRange: {x: 2, y: 5}
-  attackCooldown: 0.75
+  restDurationRange: {x: 2, y: 7}
+  growlDistance: 10
+  growlChance: 0.3
+  actionPauseTime: 0.7
+  runAwayTriggerDistance: 8
+  runAwaySpeed: 6
 --- !u!1 &2147135795
 GameObject:
   m_ObjectHideFlags: 0
