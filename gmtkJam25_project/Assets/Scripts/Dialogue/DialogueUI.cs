@@ -29,14 +29,14 @@ public class DialogueUI : CanvasView
         _continueButton.onClick.RemoveListener(Continue);
     }
 
-    protected override void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            PlayDebug();
-        }
-        base.Update();
-    }
+    //protected override void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.E))
+    //    {
+    //        PlayDebug();
+    //    }
+    //    base.Update();
+    //}
 
     [ContextMenu("PlayDebug()")]
     public void PlayDebug()

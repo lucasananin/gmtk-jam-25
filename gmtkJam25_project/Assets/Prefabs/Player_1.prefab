@@ -236,6 +236,7 @@ GameObject:
   - component: {fileID: 1764811671419929509}
   - component: {fileID: 5015741650283688234}
   - component: {fileID: 2321559466348926528}
+  - component: {fileID: -4325013118215045034}
   m_Layer: 0
   m_Name: Player_1
   m_TagString: Untagged
@@ -346,8 +347,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entitySO: {fileID: 11400000, guid: 74945c46a3a1ec24688bf94803d0bd59, type: 2}
-  _healthBehaviour: {fileID: 0}
+  _healthBehaviour: {fileID: -4325013118215045034}
   _input: {fileID: 627688512135304504}
+  _mover: {fileID: 1764811671419929509}
+  _weaponHandler: {fileID: 2321559466348926528}
+  _state: 0
 --- !u!114 &627688512135304504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,6 +366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveInput: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _shootInput: {fileID: 1120369429361536294, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  _dodgeInput: {fileID: -7471211009204490832, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!114 &1764811671419929509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,6 +382,9 @@ MonoBehaviour:
   _rb: {fileID: 7871982859722207709}
   _input: {fileID: 627688512135304504}
   _moveSpeed: 5
+  _dodgeSpeed: 20
+  _dodgeDuration: 0.3
+  _dodgeTime: 0
 --- !u!114 &5015741650283688234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +424,27 @@ MonoBehaviour:
   _lastWeaponIndex: 0
   _isWaitingSwapDelay: 0
   _canRotateWeapon: 0
+--- !u!114 &-4325013118215045034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9207536486939579004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3397504d5177814ca6985d19f2590ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isInvincible: 0
+  _maxHealth: 100
+  _deathDelay: 0
+  _currentHealth: 0
+  _isDying: 0
+  _lastDamageModel:
+    _entitySource: {fileID: 0}
+    _pointHit: {x: 0, y: 0, z: 0}
+    _value: 0
 --- !u!1001 &187194459714826008
 PrefabInstance:
   m_ObjectHideFlags: 0

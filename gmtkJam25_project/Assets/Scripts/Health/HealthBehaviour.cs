@@ -37,11 +37,13 @@ public abstract class HealthBehaviour : MonoBehaviour
 
     public void TakeDamage(DamageModel _damageModel)
     {
+        if (_isInvincible) return;
+
         _lastDamageModel = _damageModel;
         _currentHealth -= _damageModel.Value;
 
-        if (_isInvincible)
-            RestoreHealth();
+        //if (_isInvincible)
+        //    RestoreHealth();
 
         if (_currentHealth <= 0 && !_isDying)
         {
@@ -105,5 +107,10 @@ public abstract class HealthBehaviour : MonoBehaviour
     {
         yield return new WaitForSeconds(_deathDelay);
         OnDead_();
+    }
+
+    public void SetInvincibility(bool _value)
+    {
+        _isInvincible = _value;
     }
 }

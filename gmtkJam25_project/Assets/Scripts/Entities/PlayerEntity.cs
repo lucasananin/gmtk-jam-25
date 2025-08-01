@@ -4,6 +4,50 @@ public class PlayerEntity : EntityBehaviour
 {
     //[SerializeField] PlayerMover _mover = null;
     [SerializeField] InputHandler _input = null;
+    [SerializeField] PlayerMover _mover = null;
+    [SerializeField] PlayerWeaponHandler _weaponHandler = null;
+
+    [Header("// READONLY")]
+    [SerializeField] PlayerState _state = default;
+
+    private void Update()
+    {
+        switch (_state)
+        {
+            case PlayerState.move:
+                _weaponHandler.CheckTriggerInput();
+                if (_mover.TryStartDodge())
+                {
+                    _state = PlayerState.dodge;
+                    _healthBehaviour.SetInvincibility(true);
+                }
+                break;
+            case PlayerState.dodge:
+                _mover.IncreaseDodgeTime();
+                if (!_mover.IsDodging())
+                {
+                    _state = PlayerState.move;
+                    _healthBehaviour.SetInvincibility(false);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        switch (_state)
+        {
+            case PlayerState.move:
+                _mover.MoveWithInput();
+                break;
+            case PlayerState.dodge:
+                break;
+            default:
+                break;
+        }
+    }
 
     //private void OnValidate()
     //{
@@ -30,4 +74,10 @@ public class PlayerEntity : EntityBehaviour
     //{
     //    transform.position = Vector3.zero;
     //}
+}
+
+public enum PlayerState
+{
+    move,
+    dodge,
 }

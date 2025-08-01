@@ -42,24 +42,37 @@ public class PlayerWeaponHandler : MonoBehaviour
     //    _entityFlipper.OnFlip -= RotateCurrentWeapon;
     //}
 
-    private void Update()
-    {
-        if (_input.PullTrigger)
-        {
-            PullTrigger();
-        }
+    //private void Update()
+    //{
+    //    if (_input.PullTrigger)
+    //    {
+    //        PullTrigger();
+    //    }
          
-        if (_input.ReleaseTrigger)
-        {
-            ReleaseTrigger();
-        }
-    }
+    //    if (_input.ReleaseTrigger)
+    //    {
+    //        ReleaseTrigger();
+    //    }
+    //}
 
     private void FixedUpdate()
     {
         if (_canRotateWeapon)
         {
             RotateCurrentWeapon();
+        }
+    }
+
+    public void CheckTriggerInput()
+    {
+        if (_input.PullTrigger)
+        {
+            PullTrigger();
+        }
+
+        if (_input.ReleaseTrigger)
+        {
+            ReleaseTrigger();
         }
     }
 
