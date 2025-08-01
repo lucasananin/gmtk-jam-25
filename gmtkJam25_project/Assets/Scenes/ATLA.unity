@@ -1556,6 +1556,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1618321156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1618321157}
+  m_Layer: 0
+  m_Name: AttackBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1618321157
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618321156}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.6, y: -0.019, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1923475480}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1802062596
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,6 +1630,7 @@ GameObject:
   - component: {fileID: 1923475480}
   - component: {fileID: 1923475482}
   - component: {fileID: 1923475483}
+  - component: {fileID: 1923475484}
   m_Layer: 0
   m_Name: Bear
   m_TagString: Bear
@@ -1615,10 +1647,11 @@ Transform:
   m_GameObject: {fileID: 1923475479}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.95, y: -4, z: 0.06927363}
+  m_LocalPosition: {x: -6.39, y: 5.52, z: 0.06927363}
   m_LocalScale: {x: 1.9265, y: 3.243, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1618321157}
   m_Father: {fileID: 2147135796}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1923475482
@@ -1699,6 +1732,8 @@ MonoBehaviour:
   - {fileID: -6520399005743022887, guid: acf116e948b74a9428c70d1205be5894, type: 3}
   - {fileID: 1964704918124762506, guid: 0511c092e2cb3c94c940fc0212d3dfa1, type: 3}
   - {fileID: -6108902851531533812, guid: 0d03aaa04075fc541a5d8c1dd86cc540, type: 3}
+  attackBarPrefab: {fileID: 2847466527094886114, guid: 31b5ea460d39a934d81b1fdd8db38e66, type: 3}
+  attackBarLoc: {fileID: 1618321157}
   totalStamina: 1000
   staminaRecoveryPerSecond: 7
   chaseStaminaCostPerSecond: 5
@@ -1711,6 +1746,20 @@ MonoBehaviour:
   actionPauseTime: 0.7
   runAwayTriggerDistance: 8
   runAwaySpeed: 6
+  dashCooldown: 0.5
+--- !u!114 &1923475484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1923475479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00a0f5f03483c4340bfaa99ad2d32da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &2147135795
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ public class Bear : MonoBehaviour
 {
     [Header("References")]
     public Transform player;
+    [HideInInspector] public Vector3 GetDashDirection() => dashDirection;
 
     [Header("Movement Settings")]
     public float chaseSpeed = 3f;
@@ -14,7 +15,9 @@ public class Bear : MonoBehaviour
     [Header("Attacks")]
     public GameObject Rocks;
     public Sprite[] _rockSprites;
-    
+    public GameObject attackBarPrefab;
+    public Transform attackBarLoc;
+    private GameObject currentAttackBar;
 
     [Header("Stamina Settings")]
     public float totalStamina = 100f;
@@ -31,6 +34,7 @@ public class Bear : MonoBehaviour
     public float actionPauseTime = 1.2f;
     public float runAwayTriggerDistance = 4f;
     public float runAwaySpeed = 5f;
+    public float dashCooldown = 0.5f;
 
     private float currentStamina;
     private Vector3 dashDirection;
@@ -38,12 +42,13 @@ public class Bear : MonoBehaviour
     private float pauseTimer = 0f;
     private float restTimer = 0f;
     private float targetRestDuration = 0f;
+    private float dashCooldownTimer = 0f;
 
     private bool hasMadeDecision = false;
     private bool hasGrowled = false;
     private int dashCount = 0;
 
-    private enum ActionState { Chasing, Dashing, DashPrep, KnockingDirt, DirtPrep, Resting, GrowlPrep, Growling, RunningAway }
+    private enum ActionState { Chasing, Dashing, DashPrep, KnockingDirt, DirtPrep, Resting, GrowlPrep, Growling, RunningAway, DashCooldown }
     private ActionState currentState = ActionState.Chasing;
 
     void Start()
@@ -59,17 +64,25 @@ public class Bear : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.position);
         RegenerateStamina();
 
-        // Emergency run away if low stamina and too close
+        if (currentState == ActionState.DashCooldown)
+        {
+            dashCooldownTimer += Time.deltaTime;
+            if (dashCooldownTimer >= dashCooldown)
+            {
+                dashCooldownTimer = 0f;
+                DecideNextDash();
+            }
+            return;
+        }
+
         if (currentStamina < staminaThreshold && distance <= runAwayTriggerDistance && currentState != ActionState.RunningAway)
         {
             currentState = ActionState.RunningAway;
             restTimer = 0f;
             targetRestDuration = Random.Range(restDurationRange.x, restDurationRange.y);
-            Debug.Log("Bear runs away to recover!");
             return;
         }
 
-        // Resting after stamina drop (no threat near)
         if (currentStamina < staminaThreshold && currentState != ActionState.Resting && currentState != ActionState.RunningAway)
         {
             EnterRestingState();
@@ -109,7 +122,6 @@ public class Bear : MonoBehaviour
                 HandlePauseThen(KickDirt);
                 break;
             case ActionState.KnockingDirt:
-                Debug.Log("Bear kicks up dirt!");
                 currentState = ActionState.Chasing;
                 hasMadeDecision = false;
                 break;
@@ -173,8 +185,21 @@ public class Bear : MonoBehaviour
         if (dashCount == 1)
             currentStamina -= dashStaminaCost;
 
+        if (attackBarPrefab != null)
+        {
+            if (currentAttackBar != null) Destroy(currentAttackBar);
+
+            currentAttackBar = Instantiate(attackBarPrefab, attackBarLoc.position + Vector3.up * 0.1f, Quaternion.identity);
+            Vector3 flatDir = new Vector3(dashDirection.x, 0f, dashDirection.z).normalized;
+            float angle = Vector3.SignedAngle(Vector3.forward, flatDir, Vector3.up);
+            currentAttackBar.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+
+        }
+
         currentState = ActionState.Dashing;
     }
+
 
     void HandleDashing()
     {
@@ -186,19 +211,32 @@ public class Bear : MonoBehaviour
         }
         else
         {
-            DecideNextDash();
+            if (dashCount == 2)
+            {
+                currentState = ActionState.DashCooldown;
+            }
+            else
+            {
+                DecideNextDash();
+            }
         }
     }
 
     void DecideNextDash()
     {
+        if (currentAttackBar != null)
+        {
+            Destroy(currentAttackBar);
+            currentAttackBar = null;
+        }
+
         if (dashCount == 1 && Random.value < 0.7f)
         {
-            StartDash(); // second dash (free)
+            StartDash();
         }
         else if (dashCount == 2 && Random.value < 0.4f)
         {
-            StartDash(); // third dash (free)
+            StartDash();
         }
         else
         {
@@ -231,7 +269,7 @@ public class Bear : MonoBehaviour
             }
         }
 
-        Invoke(nameof(ReturnToChaseAfterKick), 0.5f); 
+        Invoke(nameof(ReturnToChaseAfterKick), 0.5f);
     }
 
     void ReturnToChaseAfterKick()
@@ -240,13 +278,11 @@ public class Bear : MonoBehaviour
         hasMadeDecision = false;
     }
 
-
     void EnterRestingState()
     {
         restTimer = 0f;
         targetRestDuration = Random.Range(restDurationRange.x, restDurationRange.y);
         currentState = ActionState.Resting;
-        Debug.Log("Bear is resting...");
     }
 
     void HandleResting()
@@ -274,8 +310,11 @@ public class Bear : MonoBehaviour
 
     void RegenerateStamina()
     {
-        currentStamina += staminaRecoveryPerSecond * Time.deltaTime;
-        currentStamina = Mathf.Clamp(currentStamina, 0f, totalStamina);
+        if (currentState != ActionState.RunningAway)
+        {
+            currentStamina += staminaRecoveryPerSecond * Time.deltaTime;
+            currentStamina = Mathf.Clamp(currentStamina, 0f, totalStamina);
+        }
     }
 
     void MoveTowards(Vector3 target, float speed)

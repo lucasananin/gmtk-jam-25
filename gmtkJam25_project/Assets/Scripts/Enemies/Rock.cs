@@ -25,4 +25,6 @@ public class RockProjectile : MonoBehaviour
     {
         transform.position += direction * speed * Time.deltaTime;
     }
+
+
 }
