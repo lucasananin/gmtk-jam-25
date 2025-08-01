@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dffce915729a16142bd3aaf90ca985d8, type: 3}
+  m_Name: Dialogue_1
+  m_EditorClassIdentifier: 
+  _list:
+  - characterName: Hero
+    text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut lectus
+      a lacus bibendum faucibus.
+  - characterName: Villain
+    text: Nulla eget ultrices ante. Nunc vestibulum magna ac metus posuere, id accumsan
+      dui dictum.
+  - characterName: Hero
+    text: Fusce ut lectus a lacus bibendum faucibus. Nulla eget ultrices ante. Nunc
+      vestibulum magna ac metus posuere, id accumsan dui dictum. Nullam vitae faucibus
+      sem, at viverra est. Maecenas suscipit gravida consequat. Maecenas dignissim
+      interdum velit dignissim suscipit. Ut ultricies tortor in sagittis blandit.
