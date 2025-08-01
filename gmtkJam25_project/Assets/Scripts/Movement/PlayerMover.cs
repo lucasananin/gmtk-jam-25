@@ -5,6 +5,8 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] Rigidbody2D _rb = null;
     [SerializeField] InputHandler _input = null;
     [SerializeField] float _moveSpeed = 5f;
+
+    [Header("// DODGE")]
     [SerializeField] float _dodgeSpeed = 5f;
     [SerializeField] float _dodgeDuration = 1f;
 

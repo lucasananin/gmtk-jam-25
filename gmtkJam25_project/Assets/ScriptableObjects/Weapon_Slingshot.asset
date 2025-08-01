@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51340a0e3b7d6c4448bd33bfa6a8dd66, type: 3}
-  m_Name: Weapon_1
+  m_Name: Weapon_Slingshot
   m_EditorClassIdentifier: 
   _iconSprite: {fileID: 0}
   _weaponPrefab: {fileID: 0}
-  _id: 1a
-  _displayName: 1a
+  _id: Slingshot
+  _displayName: Slingshot
   _holsterPosition: {x: 0, y: 0, z: 0}
   _holsterEuler: {x: 0, y: 0, z: 0}
   _projectileSO: {fileID: 11400000, guid: 3ee1a6006bfd60b49b070c34b88c4399, type: 2}
@@ -28,9 +28,9 @@ MonoBehaviour:
     _heatPerShot: 0
     _heatDecreasePerSecond: 0
     _maxOverheatTime: 0
-    _shootAngle: 0
+    _shootAngle: 15
     _arcMode: 0
-    _projectilesPerShot: 1
+    _projectilesPerShot: 8
     _ammoPerShot: 1
     _isAutoChargeType: 0
     _burstRate: 0

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerEntity : EntityBehaviour
 {
-    //[SerializeField] PlayerMover _mover = null;
     [SerializeField] InputHandler _input = null;
     [SerializeField] PlayerMover _mover = null;
     [SerializeField] PlayerWeaponHandler _weaponHandler = null;
