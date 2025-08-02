@@ -4,6 +4,7 @@ public class RockProjectile : MonoBehaviour
 {
     public float speed = 5f;
     public float lifetime = 2f;
+    public int damage;
     private Vector3 direction;
     private SpriteRenderer spriteRenderer;
 
@@ -26,5 +27,19 @@ public class RockProjectile : MonoBehaviour
         transform.position += direction * speed * Time.deltaTime;
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        HealthBehaviour health = other.GetComponent<HealthBehaviour>();
+
+        if (health != null)
+        {
+            EntityBehaviour source = GetComponent<EntityBehaviour>();
+            Vector3 hitPoint = other.ClosestPoint(transform.position);
+            DamageModel dmg = new DamageModel(source, hitPoint, damage);
+            health.TakeDamage(dmg);
+
+            Destroy(gameObject);
+        }
+    }
 
 }

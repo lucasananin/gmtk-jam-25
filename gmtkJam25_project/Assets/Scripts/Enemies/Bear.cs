@@ -17,6 +17,7 @@ public class Bear : MonoBehaviour
     public Sprite[] _rockSprites;
     public GameObject attackBarPrefab;
     public Transform attackBarLoc;
+    public int dashDamage;
     private GameObject currentAttackBar;
 
     [Header("Stamina Settings")]
@@ -47,6 +48,7 @@ public class Bear : MonoBehaviour
     private bool hasMadeDecision = false;
     private bool hasGrowled = false;
     private int dashCount = 0;
+    private LowerDamage LowerDamage;
 
     private enum ActionState { Chasing, Dashing, DashPrep, KnockingDirt, DirtPrep, Resting, GrowlPrep, Growling, RunningAway, DashCooldown }
     private ActionState currentState = ActionState.Chasing;
@@ -54,6 +56,7 @@ public class Bear : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player")?.transform;
+        LowerDamage = player.GetComponent<LowerDamage>();
         currentStamina = totalStamina;
     }
 
@@ -95,6 +98,9 @@ public class Bear : MonoBehaviour
             {
                 currentState = ActionState.GrowlPrep;
                 pauseTimer = 0f;
+
+                LowerDamage.LowerSpeed();
+
                 return;
             }
             hasGrowled = true;
@@ -246,6 +252,21 @@ public class Bear : MonoBehaviour
             dashCount = 0;
             currentState = ActionState.Chasing;
             hasMadeDecision = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        HealthBehaviour health = other.GetComponent<HealthBehaviour>();
+
+        if (health != null)
+        {
+            EntityBehaviour source = GetComponent<EntityBehaviour>();
+            Vector3 hitPoint = other.ClosestPoint(transform.position);
+            DamageModel dmg = new DamageModel(source, hitPoint, dashDamage);
+            health.TakeDamage(dmg);
+
+            Destroy(gameObject);
         }
     }
 
