@@ -11,6 +11,7 @@ public class Knight : MonoBehaviour
     [Header("Ranges")]
     public float closeRange = 2f;
     public float mediumRange = 5f;
+    public float longRange = 10f;
     public float chaseSpeed = 3f;
     public float minChaseDistance = 1.5f;
 
