@@ -44,15 +44,18 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     private void Update()
     {
-        if (_input.PullTrigger)
-        {
-            PullTrigger();
-        }
-         
-        if (_input.ReleaseTrigger)
-        {
-            ReleaseTrigger();
-        }
+        //if (_input.PullTrigger)
+        //{
+        //    PullTrigger();
+        //}
+
+        //if (_input.ReleaseTrigger)
+        //{
+        //    ReleaseTrigger();
+        //}
+
+        if (_input.SwapDelta.y != 0)
+            SwapThroughInput(_input.SwapDelta.y);
     }
 
     private void FixedUpdate()
@@ -60,6 +63,19 @@ public class PlayerWeaponHandler : MonoBehaviour
         if (_canRotateWeapon)
         {
             RotateCurrentWeapon();
+        }
+    }
+
+    public void CheckTriggerInput()
+    {
+        if (_input.PullTrigger)
+        {
+            PullTrigger();
+        }
+
+        if (_input.ReleaseTrigger)
+        {
+            ReleaseTrigger();
         }
     }
 
