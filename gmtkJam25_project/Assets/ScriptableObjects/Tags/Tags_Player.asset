@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Tags_Player
   m_EditorClassIdentifier: 
   _list:
-  - Enemy
+  - Bear

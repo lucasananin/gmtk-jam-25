@@ -7,6 +7,7 @@ public class Knight : MonoBehaviour
     public Transform player;
     public GameObject dashAttackTrigger;
     public GameObject closeAttackTrigger;
+    [SerializeField] HealthBehaviour _health = null;
 
     [Header("Ranges")]
     public float closeRange = 2f;
@@ -30,6 +31,9 @@ public class Knight : MonoBehaviour
     [Header("Cooldowns and Delays")]
     public float mediumAttackCooldown = 3f;
     public float postAttackPause = 1f;
+
+    [Header("Heal")]
+    [SerializeField, Range(0, 100)] int _healPercentage = 10;
 
     private bool isAttacking;
     private bool isDashing;
@@ -122,7 +126,7 @@ public class Knight : MonoBehaviour
         isAttacking = true;
         yield return new WaitForSeconds(postAttackPause);
 
-        //add healing here
+        _health.RestoreHealth(_healPercentage);
         isAttacking = false;
     }
 

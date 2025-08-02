@@ -265,8 +265,6 @@ public class Bear : MonoBehaviour
             Vector3 hitPoint = other.ClosestPoint(transform.position);
             DamageModel dmg = new DamageModel(source, hitPoint, dashDamage);
             health.TakeDamage(dmg);
-
-            Destroy(gameObject);
         }
     }
 
