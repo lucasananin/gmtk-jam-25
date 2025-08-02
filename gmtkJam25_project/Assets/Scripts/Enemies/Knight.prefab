@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 7603631663017012413}
   - component: {fileID: 4878748375136245713}
   - component: {fileID: 3276118320733499926}
+  - component: {fileID: -7133237981279357279}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Bear
@@ -256,6 +257,7 @@ MonoBehaviour:
   player: {fileID: 0}
   dashAttackTrigger: {fileID: 4760155929528430245}
   closeAttackTrigger: {fileID: 2951963176087280654}
+  _health: {fileID: -7133237981279357279}
   closeRange: 2
   mediumRange: 8
   longRange: 15
@@ -267,3 +269,29 @@ MonoBehaviour:
   closeAttackDamage: 5
   mediumAttackDamage: 5
   smashAttackDamage: 20
+  dashSpeed: 6
+  dashDuration: 0.5
+  mediumAttackCooldown: 3
+  postAttackPause: 1
+  _healPercentage: 10
+--- !u!114 &-7133237981279357279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760155929528430245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 070abf27ca32b88439db242b17d0f33d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isInvincible: 0
+  _maxHealth: 100
+  _deathDelay: 0
+  _currentHealth: 0
+  _isDying: 0
+  _lastDamageModel:
+    _entitySource: {fileID: 0}
+    _pointHit: {x: 0, y: 0, z: 0}
+    _value: 0
