@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 6667111065796108140}
   - component: {fileID: 7125054881646641012}
   - component: {fileID: 5146518868979424538}
+  - component: {fileID: 7117580541036799059}
   m_Layer: 0
   m_Name: Weapon_1
   m_TagString: Untagged
@@ -192,6 +193,22 @@ MonoBehaviour:
   _nextBurst: 0
   _currentShootCount: 0
   _isBursting: 0
+--- !u!114 &7117580541036799059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4450588901111161641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e3fd62aab7d0144b6c8f47b446286a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _so: {fileID: 11400000, guid: c51d915a8acde2b47a1bc6c4411e1b42, type: 2}
+  _playOnStart: 0
+  _stopOnDisable: 0
+  _weapon: {fileID: 5146518868979424538}
 --- !u!1 &4605436721711139482
 GameObject:
   m_ObjectHideFlags: 0

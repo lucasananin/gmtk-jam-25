@@ -387,7 +387,9 @@ MonoBehaviour:
   _moveSpeed: 5
   _dodgeSpeed: 20
   _dodgeDuration: 0.3
+  _knockbackDuration: 1
   _dodgeTime: 0
+  _knockbackTime: 0
 --- !u!114 &5015741650283688234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,6 +451,8 @@ MonoBehaviour:
     _entitySource: {fileID: 0}
     _pointHit: {x: 0, y: 0, z: 0}
     _value: 0
+    _knockbackSpeed: 0
+    _knockbackDuration: 0
 --- !u!114 &9069696600732062238
 MonoBehaviour:
   m_ObjectHideFlags: 0
