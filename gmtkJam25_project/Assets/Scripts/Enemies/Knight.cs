@@ -141,7 +141,7 @@ public class Knight : MonoBehaviour
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
                 int damage = isDashing ? mediumAttackDamage * 2 : mediumAttackDamage;
 
-                DamageModel dmg = new DamageModel(source, hitPoint, damage);
+                DamageModel dmg = new(transform, hitPoint, damage);
                 health.TakeDamage(dmg);
             }
         }

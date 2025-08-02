@@ -10,6 +10,10 @@ public class PlayerHealth : HealthBehaviour
     protected override void OnDamageTaken_()
     {
         base.OnDamageTaken_();
+
+        var _entity = GetComponent<PlayerEntity>();
+        _entity.StartKnockback();
+
         OnPlayerDamaged?.Invoke(this);
     }
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerMover : MonoBehaviour
@@ -10,8 +11,12 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] float _dodgeSpeed = 5f;
     [SerializeField] float _dodgeDuration = 1f;
 
+    [Header("// KNOCKBACK")]
+    [SerializeField] float _knockbackDuration = 1;
+
     [Header("// READONLY")]
     [SerializeField] float _dodgeTime = 0f;
+    [SerializeField] float _knockbackTime = 0f;
 
     //private void FixedUpdate()
     //{
@@ -43,5 +48,22 @@ public class PlayerMover : MonoBehaviour
     public bool IsDodging()
     {
         return _dodgeTime < _dodgeDuration;
+    }
+
+    internal void Knockback(Vector2 _velocity, float _duration)
+    {
+        _knockbackTime = 0;
+        _knockbackDuration = _duration;
+        _rb.linearVelocity = _velocity;
+    }
+
+    public void IncreaseKnockbackTime()
+    {
+        _knockbackTime += Time.deltaTime;
+    }
+
+    public bool IsKnockbacking()
+    {
+        return _knockbackTime < _knockbackDuration;
     }
 }

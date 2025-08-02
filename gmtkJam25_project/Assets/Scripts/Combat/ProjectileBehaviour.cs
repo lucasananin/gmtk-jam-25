@@ -83,7 +83,7 @@ public abstract class ProjectileBehaviour : MonoBehaviour
                 if (HasObstacleBetween(_point, _colliderHit.transform.position)) continue;
 
                 var _damage = _shootModel.GetExplosiveDamage();
-                var _damageModel = new DamageModel(_shootModel.EntitySource, transform.position, _damage);
+                var _damageModel = new DamageModel(_shootModel.EntitySource.transform, transform.position, _damage);
                 _healthBehaviour.TakeDamage(_damageModel);
             }
         }

@@ -261,9 +261,9 @@ public class Bear : MonoBehaviour
 
         if (health != null)
         {
-            EntityBehaviour source = GetComponent<EntityBehaviour>();
+            //EntityBehaviour source = GetComponent<EntityBehaviour>();
             Vector3 hitPoint = other.ClosestPoint(transform.position);
-            DamageModel dmg = new DamageModel(source, hitPoint, dashDamage);
+            DamageModel dmg = new(transform, hitPoint, dashDamage);
             health.TakeDamage(dmg);
         }
     }

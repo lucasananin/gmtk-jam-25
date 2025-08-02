@@ -33,9 +33,9 @@ public class RockProjectile : MonoBehaviour
 
         if (health != null)
         {
-            EntityBehaviour source = GetComponent<EntityBehaviour>();
+            //EntityBehaviour source = GetComponent<EntityBehaviour>();
             Vector3 hitPoint = other.ClosestPoint(transform.position);
-            DamageModel dmg = new DamageModel(source, hitPoint, damage);
+            DamageModel dmg = new(transform, hitPoint, damage);
             health.TakeDamage(dmg);
 
             Destroy(gameObject);

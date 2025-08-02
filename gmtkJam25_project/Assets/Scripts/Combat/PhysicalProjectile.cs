@@ -109,7 +109,7 @@ public class PhysicalProjectile : ProjectileBehaviour
         if (_healthBehaviour is null) return;
 
         var _damage = _shootModel.GetDamage();
-        var _damageModel = new DamageModel(_shootModel.EntitySource, _raycastHit.point, _damage);
+        var _damageModel = new DamageModel(_shootModel.EntitySource.transform, _raycastHit.point, _damage);
         _healthBehaviour.TakeDamage(_damageModel);
     }
 

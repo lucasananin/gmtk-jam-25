@@ -16,9 +16,9 @@ public class AttackTrigger : MonoBehaviour
         HealthBehaviour health = other.GetComponent<HealthBehaviour>();
         if (health != null)
         {
-            EntityBehaviour source = GetComponentInParent<EntityBehaviour>();
+            //EntityBehaviour source = GetComponentInParent<EntityBehaviour>();
             Vector3 hitPoint = other.ClosestPoint(transform.position);
-            DamageModel dmg = new DamageModel(source, hitPoint, clamped);
+            DamageModel dmg = new(transform, hitPoint, clamped);
             health.TakeDamage(dmg);
         }
     }

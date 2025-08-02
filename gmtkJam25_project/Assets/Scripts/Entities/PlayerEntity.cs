@@ -29,6 +29,13 @@ public class PlayerEntity : EntityBehaviour
                     _healthBehaviour.SetInvincibility(false);
                 }
                 break;
+            case PlayerState.knockback:
+                _mover.IncreaseKnockbackTime();
+                if (!_mover.IsKnockbacking())
+                {
+                    _state = PlayerState.move;
+                }
+                break;
             default:
                 break;
         }
@@ -46,6 +53,13 @@ public class PlayerEntity : EntityBehaviour
             default:
                 break;
         }
+    }
+
+    internal void StartKnockback()
+    {
+        _state = PlayerState.knockback;
+        var _velocity = _healthBehaviour.LastDamageModel.GetKnockbackVelocity(transform);
+        _mover.Knockback(_velocity, _healthBehaviour.LastDamageModel.KnockbackDuration);
     }
 
     //private void OnValidate()
@@ -79,4 +93,5 @@ public enum PlayerState
 {
     move,
     dodge,
+    knockback,
 }
