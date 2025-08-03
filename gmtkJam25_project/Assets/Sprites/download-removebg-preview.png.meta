@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 76ec2e51c186cee438541f5d2901741c
+guid: aae88757b49f5334cb47812961cd6cc4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5807865135215785520
-    second: Plant3_0
+      213: 3484287900037411390
+    second: download-removebg-preview_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Plant3_0
+      name: download-removebg-preview_0
       rect:
         serializedVersion: 2
-        x: 23
-        y: 4
-        width: 17
-        height: 15
+        x: 0
+        y: 33
+        width: 222
+        height: 162
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0d946105e61566fa0800000000000000
-      internalID: -5807865135215785520
+      spriteID: e32fbe0726daa5030800000000000000
+      internalID: 3484287900037411390
       vertices: []
       indices: 
       edges: []
@@ -147,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Plant3_0: -5807865135215785520
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
