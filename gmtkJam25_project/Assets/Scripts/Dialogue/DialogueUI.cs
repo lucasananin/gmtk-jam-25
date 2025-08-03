@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class DialogueUI : CanvasView
@@ -18,6 +19,8 @@ public class DialogueUI : CanvasView
 
     [Header("// DEBUG")]
     [SerializeField] DialogueSO _debugSO = null;
+
+    public static event UnityAction<DialogueSO> OnDialogueEnd = null;
 
     private void OnEnable()
     {
@@ -86,6 +89,7 @@ public class DialogueUI : CanvasView
             if (_currentIndex >= _currentSO.List.Length - 1)
             {
                 Hide();
+                OnDialogueEnd?.Invoke(_currentSO);
             }
             else
             {

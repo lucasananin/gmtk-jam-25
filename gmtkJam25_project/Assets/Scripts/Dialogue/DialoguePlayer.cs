@@ -3,19 +3,20 @@ using UnityEngine;
 public class DialoguePlayer : MonoBehaviour
 {
     [Header("// GENERAL")]
-    [SerializeField] DialogueUI _dialogueUi = null;
-    [SerializeField] PlayerHealth _playerHealth = null;
-    [SerializeField] EnemyHealth _enemyHealth = null;
+    [SerializeField] protected DialogueUI _dialogueUi = null;
+    [SerializeField] protected PlayerHealth _playerHealth = null;
+    [SerializeField] protected EnemyHealth _enemyHealth = null;
 
-    //private void Awake()
-    //{
-    //    _dialogueUi = FindFirstObjectByType<DialogueUI>();
-    //}
-
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         _playerHealth.OnDead += PlayLose;
         _enemyHealth.OnDead += PlayWin;
+    }
+
+    protected virtual void OnDisable()
+    {
+        _playerHealth.OnDead -= PlayLose;
+        _enemyHealth.OnDead -= PlayWin;
     }
 
     public virtual void PlayWin()
