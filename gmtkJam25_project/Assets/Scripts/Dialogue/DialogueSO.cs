@@ -11,6 +11,12 @@ public class DialogueSO : ScriptableObject
 [System.Serializable]
 public class DialogueData
 {
-    public string characterName = null;
-    [TextArea(6, 12)] public string text = null;
+    public Character character = default;
+    [TextArea(3, 12)] public string text = null;
+}
+
+public enum Character
+{
+    Pawnsley,
+    Kinghub,
 }

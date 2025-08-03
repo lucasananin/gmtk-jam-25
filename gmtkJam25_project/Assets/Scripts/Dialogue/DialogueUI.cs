@@ -56,7 +56,7 @@ public class DialogueUI : CanvasView
     private IEnumerator Play_Routine(DialogueData _data)
     {
         _isTyping = true;
-        _nameText.text = _data.characterName;
+        _nameText.text = _data.character.ToString();
         _messageText.text = string.Empty;
 
         while (IsShowing()) yield return null;

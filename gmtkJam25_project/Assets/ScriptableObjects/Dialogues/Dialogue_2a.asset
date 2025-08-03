@@ -10,23 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dffce915729a16142bd3aaf90ca985d8, type: 3}
-  m_Name: Dialogue_1
+  m_Name: Dialogue_2a
   m_EditorClassIdentifier: 
   _list:
-  - character: 0
+  - characterName: Hero
     text: "Days spent hunting you. Now, beast fur will make a great coat. And use
       your skull as a stew bowl!\r"
-  - character: 1
+  - characterName: Villain
     text: "Bear is only doing what I say. Why do you take so much anger out on him?\r"
-  - character: 0
+  - characterName: Hero
     text: He made choice when he protects you!
-  - character: 1
+  - characterName: Villain
     text: "Said like he had choice. Don\u2019t think you do either."
-  - character: 0
+  - characterName: Hero
     text: What do you mean?
-  - character: 1
+  - characterName: Villain
     text: "You don\u2019t make choice. Someone else does."
-  - character: 0
-    text: Listened to others when weak child. LISTEN TO SELF NOW!
-  - character: 1
+  - characterName: Hero
     text: "Let\u2019s see strength, then."

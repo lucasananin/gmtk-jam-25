@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4995237205855581422}
   - component: {fileID: 4840177458306693765}
   - component: {fileID: 6916247996298815362}
+  - component: {fileID: -3762786218331731990}
   m_Layer: 0
   m_Name: Bear
   m_TagString: Bear
@@ -211,6 +212,24 @@ MonoBehaviour:
     _entitySource: {fileID: 0}
     _pointHit: {x: 0, y: 0, z: 0}
     _value: 0
+    _knockbackSpeed: 0
+    _knockbackDuration: 0
+--- !u!114 &-3762786218331731990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3546316364888812785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4df22093f1f2f9549a0918ea0f25a8e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _so: {fileID: 11400000, guid: f0ad32da0c7eb7a48af83df0f652c063, type: 2}
+  _playOnStart: 0
+  _stopOnDisable: 0
+  _health: {fileID: 6916247996298815362}
 --- !u!1 &6058972393223943266
 GameObject:
   m_ObjectHideFlags: 0
